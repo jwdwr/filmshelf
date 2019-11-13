@@ -9,6 +9,7 @@ services:
     - ./nodemon.json:/app/nodemon.json
     - ./tsconfig.json:/app/tsconfig.json
     - ./node_modules:/app/node_modules
+    - ./config:/app/config
     command: npm run dev
     environment:
     - NODE_ENV=development

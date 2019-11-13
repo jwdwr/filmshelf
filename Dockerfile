@@ -9,6 +9,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # move app code
 COPY dist /app/dist
+COPY config /app/config
 
 # install and cache app dependencies
 ADD package.json /app/

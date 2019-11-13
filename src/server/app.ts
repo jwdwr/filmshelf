@@ -3,6 +3,7 @@ import pino from 'express-pino-logger';
 import bodyParser from 'body-parser';
 
 import filmRouter from "./routes/film";
+import omdbRouter from "./routes/omdb";
 
 // express app
 class App {
@@ -25,6 +26,7 @@ class App {
   private routes(): void {
     this.express.get('/', (req, res) => res.send(true));
     this.express.use("/film", filmRouter);
+    this.express.use("/omdb", omdbRouter);
   }
 }
 
