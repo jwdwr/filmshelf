@@ -63,5 +63,5 @@ export class FilmRouter {
 
 // create router & export routes
 const filmRoutes = new FilmRouter();
-let router = filmRoutes.router;
+const router = filmRoutes.router;
 export default router;
