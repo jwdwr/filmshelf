@@ -34,6 +34,27 @@ describe("Film routes", () => {
       });
   });
 
+  it("shouldn't successfully add an invalid film", done => {
+    request(server)
+      .post("/film/add")
+      .send({
+        title: "Laser ants",
+        format: "VHS",
+        length: 360,
+        year: 1988,
+        rating: 5
+      })
+      .end((err, res) => {
+        expect(err).to.be.null();
+        expect(res).to.have.status(200);
+        expect(res.body.film).to.be.an("object");
+
+        filmId = res.body.film._id;
+        expect(filmId).to.be.a("string");
+        done();
+      });
+  });
+
   it("should successfully get a film", done => {
     request(server)
       .get(`/film/get/${filmId}`)

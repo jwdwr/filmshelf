@@ -1,0 +1,9 @@
+{
+  "omdb": {
+    "apiUri": "http://www.omdbapi.com/",
+    "apiKey": "40dae809"
+  },
+  "mongodb": {
+    "uri": "mongodb://mongo:27017/filmshelf"
+  }
+}

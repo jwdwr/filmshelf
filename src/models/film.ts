@@ -23,16 +23,19 @@ export const FilmSchema = new mongoose.Schema({
   },
   length: {
     type: Number,
+    required: true,
     min: 0,
     max: 500
   },
   year: {
     type: Number,
+    required: true,
     min: 1800,
     max: 2100
   },
   rating: {
     type: Number,
+    required: true,
     min: 1,
     max: 5
   }

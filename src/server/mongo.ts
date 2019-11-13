@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import config from "config";
 import pino from "pino";
 const logger = pino();
 
@@ -6,7 +7,7 @@ const logger = pino();
  * class for handling MongoDB connection
  */
 class Mongo {
-  uri: string = "mongodb://mongo:27017/filmshelf";
+  uri: string = config.get('mongodb.uri');
 
   constructor() {
     this.connect();
