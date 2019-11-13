@@ -1,0 +1,12 @@
+version: '3'
+services:
+  filmshelf:
+    ports:
+      - "3000:3000"
+    volumes:
+    - ./src:/app/src
+    - ./nodemon.json:/app/nodemon.json
+    - ./tsconfig.json:/app/tsconfig.json
+    command: npm run dev
+    environment:
+    - NODE_ENV=development

@@ -3,25 +3,25 @@ import pino from 'express-pino-logger';
 
 import filmRouter from "./routes/film";
 
-// Creates and configures an ExpressJS web server.
+// express app
 class App {
-  // ref to Express instance
   public express: express.Application;
 
-  //Run configuration methods on the Express instance.
+  // create express app
   constructor() {
     this.express = express();
     this.middleware();
     this.routes();
   }
 
-  // Configure Express middleware.
+  // add middleware
   private middleware(): void {
     this.express.use(pino());
   }
 
-  // Configure API endpoints.
+  // add endpoints
   private routes(): void {
+    this.express.get('/', (req, res) => res.send(true));
     this.express.use("/film", filmRouter);
   }
 }
