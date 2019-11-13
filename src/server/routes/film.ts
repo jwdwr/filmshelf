@@ -27,29 +27,33 @@ export class FilmRouter {
   /**
    * get a film from the collection
    */
-  public getFilm(req: Request, res: Response) {
-    res.send(false);
+  public async getFilm(req: Request, res: Response) {
+    const film = await filmController.getFilm(req.params.id);
+    res.send(film);
   }
 
   /**
    * edit a film in the collection
    */
-  public editFilm(req: Request, res: Response) {
-    res.send(false)
+  public async editFilm(req: Request, res: Response) {
+    const film = await filmController.editFilm(req.params.id, req.body);
+    res.send(film)
   }
 
   /**
    * delete a film from the collection
    */
-  public deleteFilm(req: Request, res: Response) {
-    res.send(false);
+  public async deleteFilm(req: Request, res: Response) {
+    const deleted = await filmController.deleteFilm(req.params.id);
+    res.send(deleted);
   }
 
   /**
    * list the films in the collection
    */
-  public listFilms(req: Request, res: Response) {
-    res.send(false);
+  public async listFilms(req: Request, res: Response) {
+    const films = await filmController.listFilms();
+    res.send(films);
   }
 
   /**

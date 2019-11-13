@@ -12,6 +12,8 @@ describe("Film routes", () => {
     server.close();
   });
 
+  let filmId: string;
+
   it("should successfully add a film", done => {
     request(server)
       .post("/film/add")
@@ -26,34 +28,31 @@ describe("Film routes", () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an("object");
 
-        const filmId = res.body._id;
+        filmId = res.body._id;
         expect(filmId).to.be.a("string");
         done();
       });
   });
 
   it("should successfully get a film", done => {
-    const filmToGet = 1;
     request(server)
-      .get(`/film/get/${filmToGet}`)
-      .send({})
+      .get(`/film/get/${filmId}`)
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
         expect(res.body).to.be.an("object");
 
-        const filmName = res.body.name;
+        const filmName = res.body.title;
         expect(filmName).to.be.a("string");
         done();
       });
   });
 
   it("should successfully edit a film", done => {
-    const filmToEdit = 1;
     const newName = "a new name";
     request(server)
-      .put(`/film/edit/${filmToEdit}`)
-      .send({name: newName})
+      .put(`/film/edit/${filmId}`)
+      .send({title: newName})
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
@@ -66,9 +65,8 @@ describe("Film routes", () => {
   });
 
   it("should successfully delete a film", done => {
-    const filmToDelete = 1;
     request(server)
-      .delete(`/film/delete/${filmToDelete}`)
+      .delete(`/film/delete/${filmId}`)
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
@@ -78,7 +76,6 @@ describe("Film routes", () => {
   });
 
   it("should successfully list films", done => {
-    const filmToDelete = 1;
     request(server)
       .get("/film/list")
       .end((err, res) => {
