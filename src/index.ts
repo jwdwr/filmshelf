@@ -2,6 +2,7 @@ import * as http from 'http';
 import pino from 'pino';
 const logger = pino();
 
+import './server/mongo';
 import App from './server/app';
 
 const port = process.env.PORT || 3000;

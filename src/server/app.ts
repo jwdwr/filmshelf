@@ -1,5 +1,6 @@
 import express from 'express';
 import pino from 'express-pino-logger';
+import bodyParser from 'body-parser';
 
 import filmRouter from "./routes/film";
 
@@ -17,6 +18,7 @@ class App {
   // add middleware
   private middleware(): void {
     this.express.use(pino());
+    this.express.use(bodyParser.json());
   }
 
   // add endpoints

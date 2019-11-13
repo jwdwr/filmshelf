@@ -5,8 +5,10 @@ services:
       - "3000:3000"
     volumes:
     - ./src:/app/src
+    - ./test:/app/test
     - ./nodemon.json:/app/nodemon.json
     - ./tsconfig.json:/app/tsconfig.json
+    - ./node_modules:/app/node_modules
     command: npm run dev
     environment:
     - NODE_ENV=development

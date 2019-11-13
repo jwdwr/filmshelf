@@ -1,4 +1,6 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
+
+import filmController from '../../controllers/film';
 
 /**
  * routes relating to films
@@ -17,8 +19,9 @@ export class FilmRouter {
   /**
    * add a film to the collection
    */
-  public addFilm(req: Request, res: Response) {
-    res.send(false);
+  public async addFilm(req: Request, res: Response) {
+    const film = await filmController.addFilm(req.body);
+    res.send(film);
   }
 
   /**

@@ -15,14 +15,19 @@ describe("Film routes", () => {
   it("should successfully add a film", done => {
     request(server)
       .post("/film/add")
-      .send({})
+      .send({
+        title: 'Laser ants',
+        format: 'VHS',
+        length: 360,
+        year: 1988,
+        rating: 5})
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
         expect(res.body).to.be.an("object");
 
-        const filmId = res.body.id;
-        expect(filmId).to.be.a("number");
+        const filmId = res.body._id;
+        expect(filmId).to.be.a("string");
         done();
       });
   });
@@ -54,7 +59,7 @@ describe("Film routes", () => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an("object");
 
-        const filmName = res.body.name;
+        const filmName = res.body.title;
         expect(filmName).to.equal(newName);
         done();
       });
