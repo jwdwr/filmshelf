@@ -1,4 +1,6 @@
 import { Router, Request, Response } from "express";
+import pino from "pino";
+const logger = pino();
 
 import filmController from '../../controllers/film';
 
@@ -20,40 +22,65 @@ export class FilmRouter {
    * add a film to the collection
    */
   public async addFilm(req: Request, res: Response) {
-    const film = await filmController.addFilm(req.body);
-    res.send(film);
+    try {
+      const film = await filmController.addFilm(req.body);
+      res.send({film});
+    } catch (error) {
+      logger.error(error);
+      res.send({error});
+    }
   }
 
   /**
    * get a film from the collection
    */
   public async getFilm(req: Request, res: Response) {
-    const film = await filmController.getFilm(req.params.id);
-    res.send(film);
+    try {
+      const film = await filmController.getFilm(req.params.id);
+      res.send({film});
+    } catch (error) {
+      logger.error({error})
+      res.send({error});
+    }
   }
 
   /**
    * edit a film in the collection
    */
   public async editFilm(req: Request, res: Response) {
-    const film = await filmController.editFilm(req.params.id, req.body);
-    res.send(film)
+    try {
+      const film = await filmController.editFilm(req.params.id, req.body);
+      res.send({film});
+    } catch (error) {
+      logger.error({error});
+      res.send({error});
+    }
   }
 
   /**
    * delete a film from the collection
    */
   public async deleteFilm(req: Request, res: Response) {
-    const deleted = await filmController.deleteFilm(req.params.id);
-    res.send(deleted);
+    try {
+      const deleted = await filmController.deleteFilm(req.params.id);
+      res.send({deleted});
+    } catch (error) {
+      logger.error({error});
+      res.send({error});
+    }
   }
 
   /**
    * list the films in the collection
    */
   public async listFilms(req: Request, res: Response) {
-    const films = await filmController.listFilms();
-    res.send(films);
+    try {
+      const films = await filmController.listFilms();
+      res.send({films});
+    } catch (error) {
+      logger.error({error});
+      res.send({error});
+    }
   }
 
   /**

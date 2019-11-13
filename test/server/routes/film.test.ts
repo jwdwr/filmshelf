@@ -26,9 +26,9 @@ describe("Film routes", () => {
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
-        expect(res.body).to.be.an("object");
+        expect(res.body.film).to.be.an("object");
 
-        filmId = res.body._id;
+        filmId = res.body.film._id;
         expect(filmId).to.be.a("string");
         done();
       });
@@ -40,9 +40,9 @@ describe("Film routes", () => {
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
-        expect(res.body).to.be.an("object");
+        expect(res.body.film).to.be.an("object");
 
-        const filmName = res.body.title;
+        const filmName = res.body.film.title;
         expect(filmName).to.be.a("string");
         done();
       });
@@ -56,9 +56,9 @@ describe("Film routes", () => {
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
-        expect(res.body).to.be.an("object");
+        expect(res.body.film).to.be.an("object");
 
-        const filmName = res.body.title;
+        const filmName = res.body.film.title;
         expect(filmName).to.equal(newName);
         done();
       });
@@ -70,7 +70,7 @@ describe("Film routes", () => {
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
-        expect(res.body).to.be.true();
+        expect(res.body.deleted).to.be.true();
         done();
       });
   });
@@ -81,7 +81,7 @@ describe("Film routes", () => {
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
-        expect(res.body).to.be.an("array");
+        expect(res.body.films).to.be.an("array");
         done();
       });
   });
