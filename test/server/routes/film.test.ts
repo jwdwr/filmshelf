@@ -38,19 +38,15 @@ describe("Film routes", () => {
     request(server)
       .post("/film/add")
       .send({
-        title: "Laser ants",
-        format: "VHS",
-        length: 360,
-        year: 1988,
-        rating: 5
+        title: "Laser dolphins",
+        format: "DVD",
+        length: 600, // invalid
+        year: 1999,
+        rating: 0 // invalid
       })
       .end((err, res) => {
-        expect(err).to.be.null();
-        expect(res).to.have.status(200);
-        expect(res.body.film).to.be.an("object");
-
-        filmId = res.body.film._id;
-        expect(filmId).to.be.a("string");
+        expect(res).to.have.status(400);
+        expect(Object.keys(res.body.error.errors).length).to.equal(2);
         done();
       });
   });

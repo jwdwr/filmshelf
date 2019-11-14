@@ -1,4 +1,4 @@
-import Film, {IFilm} from '../models/film';
+import { Film, IFilm } from '../models/film';
 
 class FilmController {
   /**

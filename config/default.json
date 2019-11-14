@@ -5,5 +5,8 @@
   },
   "mongodb": {
     "uri": "mongodb://mongo:27017/filmshelf"
+  },
+  "server": {
+    "port": "3000"
   }
 }

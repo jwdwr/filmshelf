@@ -3,21 +3,12 @@ import pino from "pino";
 const logger = pino();
 
 import omdbController from '../../controllers/omdb';
+import { FilmShelfRouter } from "../router";
 
 /**
  * routes relating to OMDB functionality
  */
-export class OMDBRouter {
-  router: Router;
-
-  /**
-   * construct router & build routes
-   */
-  constructor() {
-    this.router = Router();
-    this.init();
-  }
-
+export class OMDBRouter extends FilmShelfRouter {
   public async search(req: Request, res: Response) {
     try {
       const title = req.query.title;
@@ -29,8 +20,7 @@ export class OMDBRouter {
       const result = await omdbController.search(title, year, page);
       res.send({ result });
     } catch (error) {
-      logger.error(error);
-      res.send({ error });
+      this.onError(error, res);
     }
   }
 
@@ -39,8 +29,7 @@ export class OMDBRouter {
       const filmInfo = await omdbController.get(req.params.imdbId);
       res.send({ filmInfo });
     } catch (error) {
-      logger.error(error);
-      res.send({ error });
+      this.onError(error, res);
     }
   }
 
@@ -52,8 +41,7 @@ export class OMDBRouter {
       const film = await omdbController.addFilmFromOMDB(req.params.imdbId);
       res.send({film});
     } catch (error) {
-      logger.error(error);
-      res.send({error});
+      this.onError(error, res);
     }
   }
 
