@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import filmRouter from "./routes/film";
 import omdbRouter from "./routes/omdb";
 import userRouter from './routes/user';
+import auth from './middleware/auth';
 
 // express app
 class App {
@@ -26,8 +27,8 @@ class App {
   // add endpoints
   private routes(): void {
     this.express.get('/', (req, res) => res.send(true));
-    this.express.use("/film", filmRouter);
-    this.express.use("/omdb", omdbRouter);
+    this.express.use("/film", auth, filmRouter);
+    this.express.use("/omdb", auth, omdbRouter);
     this.express.use("/user", userRouter);
   }
 }
