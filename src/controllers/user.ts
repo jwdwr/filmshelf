@@ -14,12 +14,13 @@ class UserController {
   }
 
   async token(username: string, password: string): Promise<string> {
-    if (!this.validateUser(username, password)) throw new Error('Invalid user credentials');
+    const validUser = await this.validateUser(username, password);
+    if (!validUser) throw new Error('Invalid user credentials');
     return this.getToken(username);
   }
 
   private async validateUser(username: string, password: string) {
-    const user = await User.findOne(username);
+    const user = await User.findOne({username});
     return await bcrypt.compare(password, user.password);
   }
 

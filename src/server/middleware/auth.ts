@@ -3,9 +3,6 @@ import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
 import config from 'config';
 
-import pino from "pino";
-const logger = pino();
-
 /**
  * authorization middleware. looking for header Authorization: Bearer {token}
  */
