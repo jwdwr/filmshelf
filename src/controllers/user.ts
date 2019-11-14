@@ -4,6 +4,7 @@ import config from 'config';
 
 import { User, IUser } from "../models/user";
 import userValidator from "../models/validators/user";
+import AuthenticationError from '../errors/auth-error';
 
 class UserController {
   /**
@@ -29,7 +30,7 @@ class UserController {
    */
   async token(username: string, password: string): Promise<string> {
     const validUser = await this.checkCredentials(username, password);
-    if (!validUser) throw new Error('Invalid user credentials');
+    if (!validUser) throw new AuthenticationError('Invalid user credentials');
     return this.getToken(username);
   }
 
