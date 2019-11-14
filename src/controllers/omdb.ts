@@ -20,7 +20,7 @@ class OMDBController {
       total = 0;
     } else {
       films = result.Search;
-      total = 0;
+      total = Number(result.totalResults);
     }
 
     return { films, total };

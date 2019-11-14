@@ -23,6 +23,7 @@ describe("OMDB routes", () => {
 
         expect(res.body.result.films).to.be.an("array");
         expect(res.body.result.films.length).to.be.greaterThan(1);
+        expect(res.body.result.films.length).to.equal(res.body.result.total);
         done();
       });
   });

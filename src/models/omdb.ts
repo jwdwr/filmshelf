@@ -70,6 +70,7 @@ export const OMDBFilmInfo = model<IOMDBFilmInfo>("OMDBFilmInfo", OMDBFilmInfoSch
 
 export interface IOMDBSearchResponse {
   Response: string;
+  totalResults: string;
   Search: IOMDBFilmInfo[];
 }
 
@@ -88,7 +89,7 @@ class OMDBAPI {
    * @param page page of results
    */
   async search(title: string, year: number, page: number = 1): Promise<IOMDBSearchResponse> {
-    let searchUri = `${this.apiUri}?apikey=${this.apiKey}&s=${title}&page=${page}`;
+    let searchUri = `${this.apiUri}?apikey=${this.apiKey}&s=${title}&page=${page}&type=movie`;
     if (year) {
       searchUri += `&y=${year}`;
     }
