@@ -1,29 +1,30 @@
 import { Request, Response } from "express";
 
 import userController from '../../controllers/user';
-import { FilmShelfRouter } from "../router";
+import { FilmShelfRouter } from "./router";
 
 /**
  * routes relating to user functionality
  */
 export class UserRouter extends FilmShelfRouter {
-
+  /**
+   * create a new user account
+   */
   public async signup(req: Request, res: Response) {
-    try {
-      const info = await userController.signup(req.body.username, req.body.password);
-      res.send(info);
-    } catch (error) {
-      this.onError(error, res);
-    }
+    const username = req.body.username;
+    const password = req.body.password;
+    const info = await userController.signup(username, password);
+    res.send(info);
   }
 
+  /**
+   * validate credentials and return a token
+   */
   public async token(req: Request, res: Response) {
-    try {
-      const token = await userController.token(req.body.username, req.body.password);
-      res.send({token});
-    } catch (error) {
-      this.onError(error, res);
-    }
+    const username = req.body.username;
+    const password = req.body.password;
+    const token = await userController.token(username, password);
+    res.send({ token });
   }
 
   /**

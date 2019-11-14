@@ -1,11 +1,13 @@
 import express from 'express';
-import pino from 'express-pino-logger';
+import koaPino from 'express-pino-logger';
 import bodyParser from 'body-parser';
+import 'express-async-errors';
 
 import filmRouter from "./routes/film";
 import omdbRouter from "./routes/omdb";
 import userRouter from './routes/user';
 import auth from './middleware/auth';
+import onError from './middleware/on-error';
 
 // express app
 class App {
@@ -16,11 +18,12 @@ class App {
     this.express = express();
     this.middleware();
     this.routes();
+    this.error();
   }
 
   // add middleware
   private middleware(): void {
-    this.express.use(pino());
+    this.express.use(koaPino());
     this.express.use(bodyParser.json());
   }
 
@@ -30,6 +33,10 @@ class App {
     this.express.use("/film", auth, filmRouter);
     this.express.use("/omdb", auth, omdbRouter);
     this.express.use("/user", userRouter);
+  }
+
+  private error(): void {
+    this.express.use(onError);
   }
 }
 

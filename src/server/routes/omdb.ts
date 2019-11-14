@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import omdbController from '../../controllers/omdb';
-import { FilmShelfRouter } from "../router";
+import { FilmShelfRouter } from "./router";
 
 /**
  * routes relating to OMDB functionality
@@ -11,40 +11,30 @@ export class OMDBRouter extends FilmShelfRouter {
    * search for an IMDB film
    */
   public async search(req: Request, res: Response) {
-    try {
-      const title = req.query.title;
-      const year = req.query.year ? Number(req.query.year) : null;
-      const page = req.query.page ? Number(req.query.page) : null;
+    const title = req.query.title;
+    const year = req.query.year ? Number(req.query.year) : null;
+    const page = req.query.page ? Number(req.query.page) : null;
 
-      const result = await omdbController.search(title, year, page);
-      res.send({ result });
-    } catch (error) {
-      this.onError(error, res);
-    }
+    const result = await omdbController.search(title, year, page);
+    res.send({ result });
   }
 
   /**
    * get info about an IMDB film
    */
   public async getFilmInfo(req: Request, res: Response) {
-    try {
-      const filmInfo = await omdbController.get(req.params.imdbId);
-      res.send({ filmInfo });
-    } catch (error) {
-      this.onError(error, res);
-    }
+    const imdbId = req.params.imdbId;
+    const filmInfo = await omdbController.get(imdbId);
+    res.send({ filmInfo });
   }
 
   /**
    * add a film to the collection
    */
   public async addFilmFromOMDB(req: Request, res: Response) {
-    try {
-      const film = await omdbController.addFilmFromOMDB(req.params.imdbId);
-      res.send({film});
-    } catch (error) {
-      this.onError(error, res);
-    }
+    const imdbId = req.params.imdbId;
+    const film = await omdbController.addFilmFromOMDB(imdbId);
+    res.send({ film });
   }
 
   /**
