@@ -44,8 +44,13 @@ class FilmController {
    * Get a list of all the films in the collection
    * @return All the films
    */
-  async listFilms(): Promise<IFilm[]> {
-    return await Film.find();
+  async listFilms(sortBy: string, sortDir: number): Promise<IFilm[]> {
+    const sort: {[sortBy: string]: number} = {};
+    if (sortBy) {
+      sort[sortBy] = sortDir;
+    }
+
+    return await Film.find().sort(sort);
   }
 }
 

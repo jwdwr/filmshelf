@@ -1,6 +1,4 @@
-import { Router, Request, Response } from "express";
-import pino from "pino";
-const logger = pino();
+import { Request, Response } from "express";
 
 import filmController from '../../controllers/film';
 import { FilmShelfRouter } from "../router";
@@ -62,7 +60,9 @@ export class FilmRouter extends FilmShelfRouter {
    */
   public async listFilms(req: Request, res: Response) {
     try {
-      const films = await filmController.listFilms();
+      const sortBy = req.query.sortBy;
+      const sortDir = req.query.sortDir === 'desc' ? -1 : 1;
+      const films = await filmController.listFilms(sortBy, sortDir);
       res.send({films});
     } catch (error) {
       this.onError(error, res);

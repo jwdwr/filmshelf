@@ -1,6 +1,4 @@
-import { Router, Request, Response } from "express";
-import pino from "pino";
-const logger = pino();
+import { Request, Response } from "express";
 
 import omdbController from '../../controllers/omdb';
 import { FilmShelfRouter } from "../router";
@@ -14,8 +12,6 @@ export class OMDBRouter extends FilmShelfRouter {
       const title = req.query.title;
       const year = req.query.year ? Number(req.query.year) : null;
       const page = req.query.page ? Number(req.query.page) : null;
-
-      logger.info({title, year, page});
 
       const result = await omdbController.search(title, year, page);
       res.send({ result });
