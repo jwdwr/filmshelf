@@ -68,41 +68,43 @@ export const OMDBFilmInfoSchema = new Schema({
 
 export const OMDBFilmInfo = model<IOMDBFilmInfo>("OMDBFilmInfo", OMDBFilmInfoSchema);
 
-class OMDB {
+export interface IOMDBSearchResponse {
+  Response: string;
+  Search: IOMDBFilmInfo[];
+}
+
+export interface IOMDBGetResponse extends IOMDBFilmInfo {
+  Response: string;
+}
+
+class OMDBAPI {
   private apiUri = config.get('omdb.apiUri');
   private apiKey = config.get('omdb.apiKey');
 
   /**
    * Search the IMDB database through the OMDB interface
+   * @param title film title to search for
+   * @param year film year to search for
+   * @param page page of results
    */
-  async search(query: {title: string, year?: number}, page: number = 1): Promise<IOMDBFilmInfo[]> {
-    let searchUri = `${this.apiUri}?apikey=${this.apiKey}&s=${query.title}&page=${page}`;
-    if (query.year) {
-      searchUri += `&y=${query.year}`;
+  async search(title: string, year: number, page: number = 1): Promise<IOMDBSearchResponse> {
+    let searchUri = `${this.apiUri}?apikey=${this.apiKey}&s=${title}&page=${page}`;
+    if (year) {
+      searchUri += `&y=${year}`;
     }
 
-    const result = await rp.get({uri: searchUri, json: true});
-    if (result.Response === 'False') {
-      return [];
-    } else {
-      return result.Search;
-    }
+    return await rp.get({uri: searchUri, json: true});
   }
 
   /**
    * Get an IMDB film by ID
    * @param imdbID IMDB ID of the film you're getting
    */
-  async get(imdbID: string): Promise<IOMDBFilmInfo> {
+  async get(imdbID: string): Promise<IOMDBGetResponse> {
     const getUri = `${this.apiUri}?apikey=${this.apiKey}&i=${imdbID}`;
 
-    const result = await rp.get({ uri: getUri, json: true })
-    if (result.Response === 'False') {
-      return null;
-    } else {
-      return result;
-    }
+    return await rp.get({ uri: getUri, json: true })
   }
 }
 
-export const omdb = new OMDB();
+export const omdb = new OMDBAPI();

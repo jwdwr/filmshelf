@@ -18,6 +18,32 @@ export class OMDBRouter {
     this.init();
   }
 
+  public async search(req: Request, res: Response) {
+    try {
+      const title = req.query.title;
+      const year = req.query.year ? Number(req.query.year) : null;
+      const page = req.query.page ? Number(req.query.page) : null;
+
+      logger.info({title, year, page});
+
+      const result = await omdbController.search(title, year, page);
+      res.send({ result });
+    } catch (error) {
+      logger.error(error);
+      res.send({ error });
+    }
+  }
+
+  public async getFilmInfo(req: Request, res: Response) {
+    try {
+      const filmInfo = await omdbController.get(req.params.imdbId);
+      res.send({ filmInfo });
+    } catch (error) {
+      logger.error(error);
+      res.send({ error });
+    }
+  }
+
   /**
    * add a film to the collection
    */
@@ -35,6 +61,8 @@ export class OMDBRouter {
    * add handlers to routes
    */
   init() {
+    this.router.get("/search", this.search);
+    this.router.get("/info/:imdbId", this.getFilmInfo);
     this.router.post("/add/:imdbId", this.addFilmFromOMDB);
   }
 }
