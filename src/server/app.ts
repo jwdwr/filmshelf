@@ -1,5 +1,5 @@
 import express from 'express';
-import koaPino from 'express-pino-logger';
+import pino from 'express-pino-logger';
 import bodyParser from 'body-parser';
 import 'express-async-errors';
 
@@ -23,7 +23,7 @@ class App {
 
   // add middleware
   private middleware(): void {
-    this.express.use(koaPino());
+    this.express.use(pino());
     this.express.use(bodyParser.json());
   }
 
