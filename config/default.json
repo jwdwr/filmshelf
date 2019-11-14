@@ -11,5 +11,8 @@
   },
   "jwt": {
     "secret": "secretcode"
+  },
+  "bcrypt": {
+    "saltRounds": 10
   }
 }

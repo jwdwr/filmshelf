@@ -16,6 +16,7 @@ export const FilmSchema = new Schema({
   title: {
     type: String,
     required: true,
+    minlength: 1,
     maxlength: 500
   },
   year: {

@@ -68,6 +68,17 @@ describe("Film routes", () => {
       });
   });
 
+  it("should complain about an invalid film ID", done => {
+    request(server)
+      .get(`/film/get/${filmId}1234`)
+      .set("Authorization", "Bearer testToken")
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+
+        done();
+      });
+  });
+
   it("should successfully edit a film", done => {
     const newName = "a new name";
     request(server)
@@ -85,6 +96,31 @@ describe("Film routes", () => {
       });
   });
 
+  it("shouldn't successfully edit a nonexistent film", done => {
+    const newName = "a new name";
+    request(server)
+      .put(`/film/edit/${filmId}`)
+      .set("Authorization", "Bearer testToken")
+      .send({ title: newName })
+      .send({ omdbInfo: "some bad info" })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        done();
+      });
+  });
+
+  it("shouldn't successfully edit a film's OMDB info", done => {
+    const newName = "a new name";
+    request(server)
+      .put(`/film/edit/${filmId}`)
+      .set("Authorization", "Bearer testToken")
+      .send({ omdbInfo: 'some bad info' })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        done();
+      });
+  });
+
   it("should successfully delete a film", done => {
     request(server)
       .delete(`/film/delete/${filmId}`)
@@ -97,6 +133,16 @@ describe("Film routes", () => {
       });
   });
 
+  it("shouldn't successfully delete a nonexistent film", done => {
+    request(server)
+      .delete(`/film/delete/${filmId}1234`)
+      .set("Authorization", "Bearer testToken")
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        done();
+      });
+  });
+
   it("should successfully list films", done => {
     request(server)
       .get("/film/list")
@@ -105,6 +151,30 @@ describe("Film routes", () => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
         expect(res.body.films).to.be.an("array");
+        done();
+      });
+  });
+
+  it("should successfully sort films", done => {
+    const sortBy = "length";
+    request(server)
+      .get(`/film/list?sortBy=${sortBy}`)
+      .set("Authorization", "Bearer testToken")
+      .end((err, res) => {
+        expect(err).to.be.null();
+        expect(res).to.have.status(200);
+        expect(res.body.films).to.be.an("array");
+        done();
+      });
+  });
+
+  it("shouldn't successfully sort films by invalid fields", done => {
+    const sortBy = "cuteness";
+    request(server)
+      .get(`/film/list?sortBy=${sortBy}`)
+      .set("Authorization", "Bearer testToken")
+      .end((err, res) => {
+        expect(res).to.have.status(400);
         done();
       });
   });

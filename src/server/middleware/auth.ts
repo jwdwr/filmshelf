@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import jwt from 'jsonwebtoken';
 import config from 'config';
+import AuthenticationError from "../../errors/auth-error";
 
 /**
  * authorization middleware. looking for header Authorization: Bearer {token}
@@ -16,7 +17,7 @@ export default function auth(req: Request, res: Response, next: NextFunction) {
   if (headerMatch) {
     token = headerMatch[1];
   } else {
-    res.status(401).send({error: 'Access denied.'})
+    throw new AuthenticationError('Missing authentication token.');
     next();
   }
 
@@ -28,6 +29,6 @@ export default function auth(req: Request, res: Response, next: NextFunction) {
       next();
     }
   } catch (error) {
-    res.status(400).send({error: "Invalid token."});
+    throw new AuthenticationError("Authentication token invalid or expired.");
   }
 };

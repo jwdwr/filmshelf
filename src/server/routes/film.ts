@@ -49,7 +49,7 @@ export class FilmRouter extends FilmShelfRouter {
    */
   public async listFilms(req: Request, res: Response) {
     const sortBy = req.query.sortBy;
-    const sortDir = req.query.sortDir === 'desc' ? -1 : 1;
+    const sortDir = req.query.sortDir;
     const films = await filmController.listFilms(sortBy, sortDir);
     res.send({ films });
   }

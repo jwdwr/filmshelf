@@ -3,7 +3,6 @@ import config from 'config';
 import { Document, Schema, model } from "mongoose";
 
 // the film structure used by the OMDB API
-
 export interface IOMDBFilmInfo extends Document {
   imdbID: string;
   Title: string;
@@ -35,6 +34,7 @@ export interface IOMDBFilmInfo extends Document {
   Website?: string;
 }
 
+// omdb mongoose schema
 export const OMDBFilmInfoSchema = new Schema({
   imdbID: String,
   Title: String,
@@ -68,16 +68,19 @@ export const OMDBFilmInfoSchema = new Schema({
 
 export const OMDBFilmInfo = model<IOMDBFilmInfo>("OMDBFilmInfo", OMDBFilmInfoSchema);
 
+// format of search response from OMDB API
 export interface IOMDBSearchResponse {
   Response: string;
   totalResults: string;
   Search: IOMDBFilmInfo[];
 }
 
+// format of get response from OMDB API
 export interface IOMDBGetResponse extends IOMDBFilmInfo {
   Response: string;
 }
 
+// OMDB API wrapper
 class OMDBAPI {
   private apiUri = config.get('omdb.apiUri');
   private apiKey = config.get('omdb.apiKey');

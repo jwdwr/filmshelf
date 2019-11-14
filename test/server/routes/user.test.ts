@@ -18,7 +18,7 @@ describe("User routes", () => {
   it("should successfully create a user", done => {
     request(server)
       .post(`/user/signup`)
-      .send({username, password})
+      .send({ username, password })
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);

@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import config from 'config';
 
 import { User, IUser } from "../models/user";
+import userValidator from "../models/validators/user";
 
 class UserController {
   /**
@@ -11,7 +12,10 @@ class UserController {
    * @param password
    */
   async signup(username: string, password: string): Promise<{user: IUser, token: string}> {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    await userValidator.validateUser({username, password});
+
+    const saltRounds: number = config.get('bcrypt.saltRounds');
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     const user = new User({username, password: hashedPassword});
     await user.save();
 
@@ -24,7 +28,7 @@ class UserController {
    * @param password
    */
   async token(username: string, password: string): Promise<string> {
-    const validUser = await this.validateUser(username, password);
+    const validUser = await this.checkCredentials(username, password);
     if (!validUser) throw new Error('Invalid user credentials');
     return this.getToken(username);
   }
@@ -34,7 +38,7 @@ class UserController {
    * @param username
    * @param password
    */
-  private async validateUser(username: string, password: string) {
+  private async checkCredentials(username: string, password: string) {
     const user = await User.findOne({username});
     return await bcrypt.compare(password, user.password);
   }

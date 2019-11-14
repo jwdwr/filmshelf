@@ -1,6 +1,7 @@
 import { IFilm } from "../models/film";
+import filmController from "../controllers/film";
 import { omdb, IOMDBFilmInfo } from "../models/omdb";
-import filmController from '../controllers/film';
+import omdbValidator from "../models/validators/omdb";
 
 class OMDBController {
   /**
@@ -27,6 +28,8 @@ class OMDBController {
   }
 
   async get(imdbID: string): Promise<IOMDBFilmInfo> {
+    await omdbValidator.validateImdbID(imdbID);
+
     const result = await omdb.get(imdbID);
 
     if (result.Response === 'False') {
@@ -42,15 +45,21 @@ class OMDBController {
    * @param imdbId IMDB film ID
    * @return The added film
    */
-  async addFilmFromOMDB(imdbId: string): Promise<IFilm> {
-    const omdbFilmInfo = await this.get(imdbId);
+  async addFilmFromOMDB(imdbID: string): Promise<IFilm> {
+    await omdbValidator.validateImdbID(imdbID);
+
+    const omdbFilmInfo = await this.get(imdbID);
 
     const filmInfo = {
       title: omdbFilmInfo.Title,
       year: Number(omdbFilmInfo.Year),
-      length: this.getLengthFromRuntime(omdbFilmInfo.Runtime),
       omdbFilmInfo
     } as IFilm;
+
+    const length = this.getLengthFromRuntime(omdbFilmInfo.Runtime);
+    if (length) {
+      filmInfo.length = length;
+    }
 
     return filmController.addFilm(filmInfo);
   }
