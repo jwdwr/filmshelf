@@ -7,6 +7,9 @@ import { FilmShelfRouter } from "../router";
  * routes relating to OMDB functionality
  */
 export class OMDBRouter extends FilmShelfRouter {
+  /**
+   * search for an IMDB film
+   */
   public async search(req: Request, res: Response) {
     try {
       const title = req.query.title;
@@ -20,6 +23,9 @@ export class OMDBRouter extends FilmShelfRouter {
     }
   }
 
+  /**
+   * get info about an IMDB film
+   */
   public async getFilmInfo(req: Request, res: Response) {
     try {
       const filmInfo = await omdbController.get(req.params.imdbId);
@@ -45,9 +51,9 @@ export class OMDBRouter extends FilmShelfRouter {
    * add handlers to routes
    */
   init() {
-    this.router.get("/search", this.search);
-    this.router.get("/info/:imdbId", this.getFilmInfo);
-    this.router.post("/add/:imdbId", this.addFilmFromOMDB);
+    this.router.get("/search", this.search.bind(this));
+    this.router.get("/info/:imdbId", this.getFilmInfo.bind(this));
+    this.router.post("/add/:imdbId", this.addFilmFromOMDB.bind(this));
   }
 }
 

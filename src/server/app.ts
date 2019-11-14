@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 
 import filmRouter from "./routes/film";
 import omdbRouter from "./routes/omdb";
+import userRouter from './routes/user';
 
 // express app
 class App {
@@ -27,6 +28,7 @@ class App {
     this.express.get('/', (req, res) => res.send(true));
     this.express.use("/film", filmRouter);
     this.express.use("/omdb", omdbRouter);
+    this.express.use("/user", userRouter);
   }
 }
 

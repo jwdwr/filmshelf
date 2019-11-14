@@ -41,4 +41,6 @@ export const FilmSchema = new Schema({
   omdbFilmInfo: OMDBFilmInfoSchema
 });
 
+FilmSchema.index({title: 1, year: 1}, {unique: true});
+
 export const Film = model<IFilm>("Film", FilmSchema);
