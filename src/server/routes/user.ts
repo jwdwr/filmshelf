@@ -31,8 +31,8 @@ export class UserRouter extends FilmShelfRouter {
    * add handlers to routes
    */
   init() {
-    this.router.post("/signup", this.signup.bind(this));
-    this.router.post("/token", this.token.bind(this));
+    this.router.post("/signup", this.signup);
+    this.router.post("/token", this.token);
   }
 }
 

@@ -41,9 +41,9 @@ export class OMDBRouter extends FilmShelfRouter {
    * add handlers to routes
    */
   init() {
-    this.router.get("/search", this.search.bind(this));
-    this.router.get("/info/:imdbId", this.getFilmInfo.bind(this));
-    this.router.post("/add/:imdbId", this.addFilmFromOMDB.bind(this));
+    this.router.get("/search", this.search);
+    this.router.get("/info/:imdbId", this.getFilmInfo);
+    this.router.post("/add/:imdbId", this.addFilmFromOMDB);
   }
 }
 

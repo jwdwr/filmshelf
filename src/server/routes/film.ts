@@ -58,11 +58,11 @@ export class FilmRouter extends FilmShelfRouter {
    * add handlers to routes
    */
   init() {
-    this.router.post("/add", this.addFilm.bind(this));
-    this.router.get("/get/:id", this.getFilm.bind(this));
-    this.router.put("/edit/:id", this.editFilm.bind(this));
-    this.router.delete("/delete/:id", this.deleteFilm.bind(this));
-    this.router.get("/list", this.listFilms.bind(this));
+    this.router.post("/add", this.addFilm);
+    this.router.get("/get/:id", this.getFilm);
+    this.router.put("/edit/:id", this.editFilm);
+    this.router.delete("/delete/:id", this.deleteFilm);
+    this.router.get("/list", this.listFilms);
   }
 }
 
