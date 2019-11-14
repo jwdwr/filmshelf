@@ -49,7 +49,6 @@ describe("Film routes", () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(Object.keys(res.body.error.errors).length).to.equal(2);
         done();
       });
   });
