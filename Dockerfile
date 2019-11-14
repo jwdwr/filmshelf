@@ -8,12 +8,12 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # move app code
-COPY dist /app/dist
+COPY src /app/src
 COPY config /app/config
 
 # install and cache app dependencies
 ADD package.json /app/
 ADD package-lock.json /app/
-RUN npm install
+RUN npm install && npm run build
 
 EXPOSE 3000
