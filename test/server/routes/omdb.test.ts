@@ -17,6 +17,7 @@ describe("OMDB routes", () => {
   it("should successfully search OMDB", done => {
     request(server)
       .get("/omdb/search?title=laser&year=2012")
+      .set('Authorization', 'Bearer testToken')
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
@@ -31,11 +32,12 @@ describe("OMDB routes", () => {
   it("should successfully get info about a film from OMDB", done => {
     request(server)
       .get(`/omdb/info/${omdbFilmId}`)
+      .set("Authorization", "Bearer testToken")
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
 
-        expect(res.body.filmInfo).to.be.an('object');
+        expect(res.body.filmInfo).to.be.an("object");
         done();
       });
   });
@@ -43,6 +45,7 @@ describe("OMDB routes", () => {
   it("should successfully add a film from OMDB", done => {
     request(server)
       .post(`/omdb/add/${omdbFilmId}`)
+      .set("Authorization", "Bearer testToken")
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);

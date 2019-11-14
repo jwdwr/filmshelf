@@ -17,12 +17,14 @@ describe("Film routes", () => {
   it("should successfully add a film", done => {
     request(server)
       .post("/film/add")
+      .set("Authorization", "Bearer testToken")
       .send({
-        title: 'Laser ants',
-        format: 'VHS',
+        title: "Laser ants",
+        format: "VHS",
         length: 360,
         year: 1988,
-        rating: 5})
+        rating: 5
+      })
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
@@ -37,6 +39,7 @@ describe("Film routes", () => {
   it("shouldn't successfully add an invalid film", done => {
     request(server)
       .post("/film/add")
+      .set("Authorization", "Bearer testToken")
       .send({
         title: "Laser dolphins",
         format: "DVD",
@@ -54,6 +57,7 @@ describe("Film routes", () => {
   it("should successfully get a film", done => {
     request(server)
       .get(`/film/get/${filmId}`)
+      .set("Authorization", "Bearer testToken")
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
@@ -69,7 +73,8 @@ describe("Film routes", () => {
     const newName = "a new name";
     request(server)
       .put(`/film/edit/${filmId}`)
-      .send({title: newName})
+      .set("Authorization", "Bearer testToken")
+      .send({ title: newName })
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
@@ -84,6 +89,7 @@ describe("Film routes", () => {
   it("should successfully delete a film", done => {
     request(server)
       .delete(`/film/delete/${filmId}`)
+      .set("Authorization", "Bearer testToken")
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
@@ -95,6 +101,7 @@ describe("Film routes", () => {
   it("should successfully list films", done => {
     request(server)
       .get("/film/list")
+      .set("Authorization", "Bearer testToken")
       .end((err, res) => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);

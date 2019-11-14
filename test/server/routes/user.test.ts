@@ -12,12 +12,12 @@ describe("User routes", () => {
     server.close();
   });
 
-  const username = 'superuser';
+  const username = "superuser" + Math.floor(Math.random() * 1000000);
   const password = 'superpassword';
 
   it("should successfully create a user", done => {
     request(server)
-      .post(`/user/new`)
+      .post(`/user/signup`)
       .send({username, password})
       .end((err, res) => {
         expect(err).to.be.null();
