@@ -8,10 +8,6 @@ use(chaiHttp);
 use(dirtyChai);
 
 describe("OMDB routes", () => {
-  after(() => {
-    server.close();
-  });
-
   const omdbFilmId = "tt2668142";
 
   it("should successfully search OMDB", done => {

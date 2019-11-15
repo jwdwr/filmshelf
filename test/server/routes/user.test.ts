@@ -1,5 +1,5 @@
 import server from "../../../src/index";
-import { describe, it, after } from "mocha";
+import { describe, it } from "mocha";
 import { use, expect, request } from "chai";
 import chaiHttp from "chai-http";
 import dirtyChai from "dirty-chai";
@@ -8,10 +8,6 @@ use(chaiHttp);
 use(dirtyChai);
 
 describe("User routes", () => {
-  after(() => {
-    server.close();
-  });
-
   const username = "superuser" + Math.floor(Math.random() * 1000000);
   const password = 'superpassword';
   const badUsername = "u";

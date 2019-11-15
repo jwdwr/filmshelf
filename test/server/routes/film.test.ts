@@ -8,10 +8,6 @@ use(chaiHttp);
 use(dirtyChai);
 
 describe("Film routes", () => {
-  after(() => {
-    server.close();
-  });
-
   let filmId: string;
   const badFilmId = "000000000000000000000000";
 
