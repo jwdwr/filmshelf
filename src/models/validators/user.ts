@@ -1,5 +1,4 @@
 import Joi = require("@hapi/joi");
-import { IUser } from "../user";
 import ValidationError from "../../errors/validation-error";
 
 class UserValidator {

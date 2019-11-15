@@ -18,7 +18,6 @@ export default function auth(req: Request, res: Response, next: NextFunction) {
     token = headerMatch[1];
   } else {
     throw new AuthenticationError('Missing authentication token.');
-    next();
   }
 
   try {
