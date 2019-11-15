@@ -1,6 +1,5 @@
 import Joi from "@hapi/joi";
 import ValidationError from "../../errors/validation-error";
-import { join } from "bluebird";
 
 class OMDBValidator {
   async validateSearch(search: {title: string, year: number, page: number}): Promise<void> {

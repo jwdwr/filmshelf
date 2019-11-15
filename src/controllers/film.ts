@@ -1,8 +1,6 @@
 import { Film, IFilm } from '../models/film';
 import filmValidator from '../models/validators/film';
 import NotFoundError from '../errors/not-found-error';
-import pino from "pino";
-const logger = pino();
 
 class FilmController {
   /**
