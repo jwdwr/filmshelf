@@ -18,7 +18,7 @@ describe("Express server", () => {
         expect(err).to.be.null();
         expect(res).to.have.status(200);
         expect(res.body).to.equal(true);
+        done();
       });
-    done();
   });
 });

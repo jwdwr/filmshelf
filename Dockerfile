@@ -14,6 +14,10 @@ COPY config /app/config
 # install and cache app dependencies
 ADD package.json /app/
 ADD package-lock.json /app/
-RUN npm install && npm run build
+RUN npm install
+
+# compile typescript
+ADD tsconfig.json /app/
+RUN npm run build
 
 EXPOSE 3000
