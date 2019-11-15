@@ -13,7 +13,7 @@ export class OMDBRouter extends FilmShelfRouter {
   public async search(req: Request, res: Response) {
     const title = req.query.title;
     const year = req.query.year ? Number(req.query.year) : null;
-    const page = req.query.page ? Number(req.query.page) : null;
+    const page = req.query.page ? Number(req.query.page) : 1;
 
     const result = await omdbController.search(title, year, page);
     res.send({ result });

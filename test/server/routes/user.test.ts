@@ -14,6 +14,8 @@ describe("User routes", () => {
 
   const username = "superuser" + Math.floor(Math.random() * 1000000);
   const password = 'superpassword';
+  const badUsername = "u";
+  const wrongPassword = "password";
 
   it("should successfully create a user", done => {
     request(server)
@@ -28,6 +30,16 @@ describe("User routes", () => {
       });
   });
 
+  it("shouldn't successfully create an invalid user", done => {
+    request(server)
+      .post(`/user/signup`)
+      .send({ badUsername, password })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        done();
+      });
+  });
+
   it("should successfully get a token", done => {
     request(server)
       .post(`/user/token`)
@@ -37,6 +49,16 @@ describe("User routes", () => {
         expect(res).to.have.status(200);
         expect(res.body.token).to.be.a("string");
 
+        done();
+      });
+  });
+
+  it("shouldn't get a token with the wrong password", done => {
+    request(server)
+      .post(`/user/token`)
+      .send({ username, password: wrongPassword })
+      .end((err, res) => {
+        expect(res).to.have.status(401);
         done();
       });
   });

@@ -29,6 +29,8 @@ class UserController {
    * @param password
    */
   async token(username: string, password: string): Promise<string> {
+    await userValidator.validateUser({ username, password });
+
     const validUser = await this.checkCredentials(username, password);
     if (!validUser) throw new AuthenticationError('Invalid user credentials');
     return this.getToken(username);

@@ -9,10 +9,10 @@ a service for managing your movie collection
 
 #### Add film
 
-Endpoint:
+*Endpoint*:
 `POST /film/add`
 
-Request body:
+*Request body:*
 `{
   title: string,
   year: number,
@@ -21,25 +21,25 @@ Request body:
   rating?: number
 }`
 
-Response: The film you added
+*Response:* The film you added
 
 #### Get film info
 
-Endpoint:
+*Endpoint:*
 `GET /film/get/:id`
 
-Params:
+*Params:*
 `id: string`
 
-Response: Info about a film in the list
+*Response:* Info about a film in the list
 
 #### Edit film
 
-Endpoint: `PUT /film/edit/:id`
+*Endpoint:* `PUT /film/edit/:id`
 
-Params: `id: string`
+*Params:* `id: string`
 
-Request body:
+*Request body:*
 `{
   title?: string,
   year?: number,
@@ -48,68 +48,68 @@ Request body:
   rating?: number
 }`
 
-Response: The updated film info
+*Response:* The updated film info
 
 #### Delete film
 
-Endpoint: `DELETE /film/delete/:id`
+*Endpoint:* `DELETE /film/delete/:id`
 
-Params: `id: string`
+*Params:* `id: string`
 
-Response: Deletion success
+*Response:* Deletion success
 
 #### List films
 
-Endpoint: `GET /film/list`
+*Endpoint:* `GET /film/list`
 
-Query params:
+*Query params:*
 
 `sortBy: 'title' | 'year' | 'length' | 'format' | 'rating'`
 
 `sortDir: 'asc' | 'desc'`
 
-Response: List of films in collection
+*Response:* List of films in collection
 
 ### OMDB
 
 #### Search
 
-Endpoint: `GET /omdb/search`
+*Endpoint:* `GET /omdb/search`
 
-Query params: `title: string, year?: number, page?: number`
+*Query params:* `title: string, year?: number, page?: number`
 
-Response: OMDB search results
+*Response:* OMDB search results
 
 #### Info
 
-Endpoint: `GET /omdb/info/:id`
+*Endpoint:* `GET /omdb/info/:id`
 
-Params: `id: string`
+*Params:* `id: string`
 
-Response: OMDB film info
+*Response:* OMDB film info
 
 #### Add to collection from OMDB
 
-Endpoint: `POST /omdb/add/:id`
+*Endpoint:* `POST /omdb/add/:id`
 
-Params: `id: string`
+*Params:* `id: string`
 
-Response: The film you added
+*Response:* The film you added
 
 ### User
 
 #### Sign up
 
-Endpoint: `POST /user/signup`
+*Endpoint:* `POST /user/signup`
 
-Post body: `username: string, password: string`
+*Post body:* `username: string, password: string`
 
-Response: Your user info and an access token
+*Response:* Your user info and an access token
 
 #### Get token
 
-Endpoint: `POST /user/token`
+*Endpoint:* `POST /user/token`
 
-Post body: `username: string, password: string`
+*Post body:* `username: string, password: string`
 
-Response: Access token
+*Response:* Access token

@@ -1,5 +1,8 @@
 import { Film, IFilm } from '../models/film';
 import filmValidator from '../models/validators/film';
+import NotFoundError from '../errors/not-found-error';
+import pino from "pino";
+const logger = pino();
 
 class FilmController {
   /**
@@ -22,7 +25,11 @@ class FilmController {
   async getFilm(filmId: string): Promise<IFilm> {
     await filmValidator.validateFilmId(filmId);
 
-    return await Film.findById(filmId);
+    const film = await Film.findById(filmId);
+
+    this.checkFilm(film);
+
+    return film;
   }
 
   /**
@@ -35,7 +42,11 @@ class FilmController {
     await filmValidator.validateFilmId(filmId);
     await filmValidator.validateFilmInfo(filmInfo, true);
 
-    return await Film.findOneAndUpdate({_id: filmId}, filmInfo, {new: true});
+    const film = await Film.findOneAndUpdate({_id: filmId}, filmInfo, {new: true});
+
+    this.checkFilm(film);
+
+    return film;
   }
 
   /**
@@ -46,8 +57,11 @@ class FilmController {
   async deleteFilm(filmId: string): Promise<boolean> {
     await filmValidator.validateFilmId(filmId);
 
-    await Film.deleteOne({ _id: filmId });
-    return true;
+    const deleted = await Film.deleteOne({ _id: filmId });
+
+    this.checkFilm(deleted.deletedCount);
+
+    return deleted.deletedCount === 1;
   }
 
   /**
@@ -63,6 +77,12 @@ class FilmController {
     }
 
     return await Film.find().sort(sort);
+  }
+
+  private checkFilm(film: any): void {
+    if (!film) {
+      throw new NotFoundError("No film with that ID in the collection");
+    }
   }
 
 }

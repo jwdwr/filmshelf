@@ -2,6 +2,9 @@ import { IFilm } from "../models/film";
 import filmController from "../controllers/film";
 import { omdb, IOMDBFilmInfo } from "../models/omdb";
 import omdbValidator from "../models/validators/omdb";
+import pino from "pino";
+import NotFoundError from "../errors/not-found-error";
+const logger = pino();
 
 class OMDBController {
   /**
@@ -11,6 +14,9 @@ class OMDBController {
    * @param page page of results
    */
   async search(title: string, year: number, page: number = 1): Promise<{ films: IOMDBFilmInfo[]; total: number }> {
+    logger.info({page});
+    await omdbValidator.validateSearch({title, year, page});
+
     const result = await omdb.search(title, year, page);
 
     let films: IOMDBFilmInfo[];
@@ -33,7 +39,7 @@ class OMDBController {
     const result = await omdb.get(imdbID);
 
     if (result.Response === 'False') {
-      return null;
+      throw new NotFoundError('Could not find film in OMDB');
     } else {
       delete result.Response;
       return result;

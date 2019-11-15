@@ -13,6 +13,7 @@ describe("Film routes", () => {
   });
 
   let filmId: string;
+  const badFilmId = "000000000000000000000000";
 
   it("should successfully add a film", done => {
     request(server)
@@ -79,6 +80,17 @@ describe("Film routes", () => {
       });
   });
 
+  it("shouldn't find a nonexistent film", done => {
+    request(server)
+      .get(`/film/get/${badFilmId}`)
+      .set("Authorization", "Bearer testToken")
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+
+        done();
+      });
+  });
+
   it("should successfully edit a film", done => {
     const newName = "a new name";
     request(server)
@@ -96,7 +108,7 @@ describe("Film routes", () => {
       });
   });
 
-  it("shouldn't successfully edit a nonexistent film", done => {
+  it("shouldn't successfully edit a film with bad info", done => {
     const newName = "a new name";
     request(server)
       .put(`/film/edit/${filmId}`)
