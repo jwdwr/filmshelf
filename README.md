@@ -1,6 +1,9 @@
 
 # filmshelf
 
+[![Build Status](https://travis-ci.com/mimsy/filmshelf.svg?branch=master)](https://travis-ci.com/mimsy/filmshelf)
+[![Coverage Status](https://coveralls.io/repos/github/mimsy/filmshelf/badge.svg?branch=master)](https://coveralls.io/github/mimsy/filmshelf?branch=master)
+
 a service for managing your movie collection
 
 ## API
