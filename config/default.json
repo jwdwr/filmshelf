@@ -4,7 +4,7 @@
     "apiKey": "40dae809"
   },
   "mongodb": {
-    "uri": "mongodb://mongo:27017/filmshelf"
+    "uri": "mongodb://localhost:27017/filmshelf"
   },
   "server": {
     "port": "3000"

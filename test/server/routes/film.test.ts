@@ -1,5 +1,5 @@
 import server from "../../../src/index";
-import { describe, it, after } from "mocha";
+import { describe, it } from "mocha";
 import { use, expect, request } from "chai";
 import chaiHttp from "chai-http";
 import dirtyChai from "dirty-chai";
